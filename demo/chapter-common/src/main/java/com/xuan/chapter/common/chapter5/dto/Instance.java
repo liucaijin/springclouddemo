@@ -24,7 +24,11 @@ public class Instance {
     }
 
 
-    public String getServiceId() {
+    public Instance(String serviceId2) {
+    	this.serviceId = serviceId2;
+	}
+
+	public String getServiceId() {
         return serviceId;
     }
 

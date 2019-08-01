@@ -1,19 +1,16 @@
 package com.example.demo.controller;
 
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.xuan.chapter.common.chapter5.dto.Instance;
 
-@RestController
+@FeignClient("eureka-client-service")
 @RequestMapping("/feign-service")
-public class FeignServiceController {
+public interface FeignServiceClient {
 	
 	@RequestMapping(value="/instance/{serviceId}",method=RequestMethod.GET)
-	public Instance getIntanceByServiceId(@PathVariable("serviceId")String serviceId){
-		return new Instance(serviceId);
-	}
-
+	public Instance getInstanceByServiceId(@PathVariable("serviceId")String serviceId);
 }
