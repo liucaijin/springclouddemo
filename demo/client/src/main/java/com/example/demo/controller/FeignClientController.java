@@ -20,6 +20,17 @@ public class FeignClientController {
     public Instance getInstanceByServiceId(@PathVariable("serviceId") String serviceId) {
         return feignServiceClient.getInstanceByServiceId(serviceId);
     }
+    
+    @RequestMapping(value = "/instance/testError", method = RequestMethod.GET)
+    public String getInstanceByServiceId() {
+    	int i = 2/0;
+        return null;
+    }
+    
+    @RequestMapping(value = "/instance/getException", method = RequestMethod.GET)
+    public Integer getInvokeError() {
+    	return feignServiceClient.getException();
+    }
 
 //    @RequestMapping(value = "/instance/{serviceId}", method = RequestMethod.DELETE)
 //    public String deleteInstanceByServiceId(@PathVariable("serviceId") String serviceId) {

@@ -15,5 +15,10 @@ public class FeignServiceController {
 	public Instance getIntanceByServiceId(@PathVariable("serviceId")String serviceId){
 		return new Instance(serviceId);
 	}
+	
+	@RequestMapping(value="/instance/exception",method=RequestMethod.GET)
+	public Integer exception(){
+		return 3/0;
+	}
 
 }

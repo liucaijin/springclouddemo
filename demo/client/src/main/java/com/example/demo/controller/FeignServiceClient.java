@@ -13,4 +13,7 @@ public interface FeignServiceClient {
 	
 	@RequestMapping(value="/instance/{serviceId}",method=RequestMethod.GET)
 	public Instance getInstanceByServiceId(@PathVariable("serviceId")String serviceId);
+	
+	@RequestMapping(value="/instance/exception",method=RequestMethod.GET)
+	public Integer getException();
 }
