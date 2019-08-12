@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xuan.chapter.common.chapter5.dto.Instance;
 
-@RestController
-@RequestMapping("/feign-client")
+//@RestController
+//@RequestMapping("/feign-client")
 public class FeignClientController {
 
     @Autowired

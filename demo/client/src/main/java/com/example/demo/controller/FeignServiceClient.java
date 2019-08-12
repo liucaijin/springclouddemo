@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.xuan.chapter.common.chapter5.dto.Instance;
 
-@FeignClient("eureka-client-service")
-@RequestMapping("/feign-service")
+//@FeignClient("eureka-client-service")
+//@RequestMapping("/feign-service")
 public interface FeignServiceClient {
 	
 	@RequestMapping(value="/instance/{serviceId}",method=RequestMethod.GET)
