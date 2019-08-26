@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
 
 import com.example.demo.service.Impl.InstanceClientFallBack;
