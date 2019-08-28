@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
 
-@Configuration
 public class MySelfRibbonRule {
  
 	

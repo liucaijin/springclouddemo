@@ -25,6 +25,8 @@ public class AskController {
 	@Autowired
 	RestTemplate restTemplate;
 	
+	@Value("${cloud.version}")
+    private String version;
 	
 	
 	@Autowired  
@@ -39,5 +41,10 @@ public class AskController {
 				+ choose.getPort();
 		String body = restTemplate.getForEntity("http://"+hostPort+"/hello/{name}", String.class, name).getBody();
 		return body;
+	}
+	
+	@RequestMapping(value="/getversion")
+	public String getVersion(){
+		return "spring cloud版本:"+ this.version;
 	}
 }
