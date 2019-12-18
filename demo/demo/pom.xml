@@ -8,9 +8,9 @@
 		<version>2.1.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.topband</groupId>
+	<artifactId>eureka</artifactId>
+	<version>0.0.1</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -21,6 +21,36 @@
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<jackson.version>2.9.6</jackson.version>
 	</properties>
+	
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<profile.active>local</profile.active>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profile.active>dev</profile.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<profile.active>test</profile.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>online</id>
+			<properties>
+				<profile.active>online</profile.active>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -62,12 +92,73 @@
 	</dependencyManagement>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+        <!-- 打的包名 -->
+        <!--<finalName>${project.artifactId}</finalName>-->
+        <plugins>
+            <!-- 打包所需要的编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+
+            <!--打成jar时，设定manifest的参数，比如指定运行的Main class，还有依赖的jar包，加入classpath中-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>../lib</classpathPrefix>
+                            <mainClass>com.example.demo.DemoApplication</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>../conf/</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <excludes>
+                        <!--注意exclude从编译结果目录开始算目录结构-->
+                        <exclude>*.properties</exclude>
+                        <exclude>config/</exclude>
+                        <exclude>cert/</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            
+            <!-- 打包插件 -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                <descriptors>
+                    <descriptor>src/main/assembly/assembly.xml</descriptor>
+                </descriptors>
+               </configuration>
+                   <executions><!--执行器 mvn assembly:assembly-->
+                       <execution>
+                           <id>make-assembly</id><!--名字任意 -->
+                           <phase>package</phase><!-- 绑定到package生命周期阶段上 -->
+                           <goals>
+                               <goal>single</goal><!-- 只运行一次 -->
+                           </goals>
+                       </execution>
+                   </executions>
+            </plugin>
+    
+            <!-- maven 打包时跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
